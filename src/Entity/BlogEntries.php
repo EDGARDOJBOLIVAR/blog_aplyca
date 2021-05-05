@@ -118,7 +118,7 @@ class BlogEntries
         return $this->user;
     }
 
-    public function setUserId(?user $user): self
+    public function setUser(?user $user): self
     {
         $this->user = $user;
 

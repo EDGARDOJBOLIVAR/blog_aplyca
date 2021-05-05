@@ -42,14 +42,14 @@ class User implements UserInterface
     private $name;
 
     /**
-     * @ORM\Column(type="datetime")
-     */
-    private $created;
-
-    /**
      * @ORM\OneToMany(targetEntity=BlogEntries::class, mappedBy="user")
      */
     private $blog_entrie;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $created;
 
     public function __construct()
     {
@@ -133,14 +133,6 @@ class User implements UserInterface
     }
 
     /**
-     * @see UserInterface
-     */
-    public function getCreated(): string
-    {
-        return (string) $this->created;
-    }
-
-    /**
      * Returning a salt is only needed, if you are not using a modern
      * hashing algorithm (e.g. bcrypt or sodium) in your security.yaml.
      *
@@ -172,7 +164,7 @@ class User implements UserInterface
     {
         if (!$this->blog_entrie->contains($blogEntrie)) {
             $this->blog_entrie[] = $blogEntrie;
-            $blogEntrie->setUserId($this);
+            $blogEntrie->setUser($this);
         }
 
         return $this;
@@ -182,10 +174,22 @@ class User implements UserInterface
     {
         if ($this->blog_entrie->removeElement($blogEntrie)) {
             // set the owning side to null (unless already changed)
-            if ($blogEntrie->getUserId() === $this) {
-                $blogEntrie->setUserId(null);
+            if ($blogEntrie->getUser() === $this) {
+                $blogEntrie->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCreated(): ?\DateTimeInterface
+    {
+        return $this->created;
+    }
+
+    public function setCreated(\DateTimeInterface $created): self
+    {
+        $this->created = $created;
 
         return $this;
     }
