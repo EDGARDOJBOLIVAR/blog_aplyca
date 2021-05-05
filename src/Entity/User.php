@@ -47,13 +47,13 @@ class User implements UserInterface
     private $created;
 
     /**
-     * @ORM\OneToMany(targetEntity=BlogEntries::class, mappedBy="user_id")
+     * @ORM\OneToMany(targetEntity=BlogEntries::class, mappedBy="user")
      */
-    private $blog_entrie_id;
+    private $blog_entrie;
 
     public function __construct()
     {
-        $this->blog_entrie_id = new ArrayCollection();
+        $this->blog_entrie = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -163,27 +163,27 @@ class User implements UserInterface
     /**
      * @return Collection|BlogEntries[]
      */
-    public function getBlogEntrieId(): Collection
+    public function getBlogEntrie(): Collection
     {
-        return $this->blog_entrie_id;
+        return $this->blog_entrie;
     }
 
-    public function addBlogEntrieId(BlogEntries $blogEntrieId): self
+    public function addBlogEntrie(BlogEntries $blogEntrie): self
     {
-        if (!$this->blog_entrie_id->contains($blogEntrieId)) {
-            $this->blog_entrie_id[] = $blogEntrieId;
-            $blogEntrieId->setUserId($this);
+        if (!$this->blog_entrie->contains($blogEntrie)) {
+            $this->blog_entrie[] = $blogEntrie;
+            $blogEntrie->setUserId($this);
         }
 
         return $this;
     }
 
-    public function removeBlogEntrieId(BlogEntries $blogEntrieId): self
+    public function removeBlogEntrie(BlogEntries $blogEntrie): self
     {
-        if ($this->blog_entrie_id->removeElement($blogEntrieId)) {
+        if ($this->blog_entrie->removeElement($blogEntrie)) {
             // set the owning side to null (unless already changed)
-            if ($blogEntrieId->getUserId() === $this) {
-                $blogEntrieId->setUserId(null);
+            if ($blogEntrie->getUserId() === $this) {
+                $blogEntrie->setUserId(null);
             }
         }
 
