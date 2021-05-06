@@ -10,6 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Messages
 {
+    const REGISTRO_EXITOSO = 'Mensaje enviado exitosamente';
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -31,6 +33,11 @@ class Messages
      * @ORM\Column(type="text")
      */
     private $text;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $created;
 
     public function getId(): ?int
     {
@@ -69,6 +76,18 @@ class Messages
     public function setText(string $text): self
     {
         $this->text = $text;
+
+        return $this;
+    }
+
+    public function getCreated(): ?\DateTimeInterface
+    {
+        return $this->created;
+    }
+
+    public function setCreated(\DateTimeInterface $created): self
+    {
+        $this->created = $created;
 
         return $this;
     }
