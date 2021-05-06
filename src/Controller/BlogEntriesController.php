@@ -61,4 +61,17 @@ class BlogEntriesController extends AbstractController
             'formulario' => $form->createView()
         ]);
     }
+
+    /**
+     * @Route("/ver-entrada/{entrada_id}", name="view_entries")
+     */
+    public function verEntrada($entrada_id): Response
+    {
+        $link = $this->getDoctrine()->getManager();
+        $Entrada = $link->getRepository(BlogEntries::class)->find($entrada_id);
+
+        return $this->render('blog_entries/ver_entrada.html.twig', [
+            'entrada' => $Entrada
+        ]);
+    }
 }

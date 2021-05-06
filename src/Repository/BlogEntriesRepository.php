@@ -19,12 +19,13 @@ class BlogEntriesRepository extends ServiceEntityRepository
         parent::__construct($registry, BlogEntries::class);
     }
 
-    public function buscarEntradasBlog()
+    public function buscarEntradasBlog($result=false)
     {
-        return $this->getEntityManager()->createQuery(
+        $Query = $this->getEntityManager()->createQuery(
             'SELECT post.id, post.title, post.text, post.image, post.date
             FROM App:BlogEntries post'
-        )->getResult();
+        );
+        return $result ? $Query->getResult() : $Query;
     }
 
     // /**

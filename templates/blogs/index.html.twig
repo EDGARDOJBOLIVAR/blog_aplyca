@@ -4,4 +4,42 @@
 
 {% block body %}
     {{ dump(posts) }}
+
+    {# total items count #}
+    <div class="count">
+        {{ pagination.getTotalItemCount }}
+    </div>
+    <table>
+        <tr>
+            {# sorting of properties based on query components #}
+            <th>{{ knp_pagination_sortable(pagination, 'Id', 'post.id') }}</th>
+            <th{% if pagination.isSorted('post.Title') %} class="sorted"{% endif %}>
+                {{ knp_pagination_sortable(pagination, 'Titulo', 'post.title') }}
+            </th>
+            <th{% if pagination.isSorted('post.Text') %} class="sorted"{% endif %}>
+                {{ knp_pagination_sortable(pagination, 'Contenido', 'post.text') }}
+            </th>
+            <th{% if pagination.isSorted('post.Image') %} class="sorted"{% endif %}>
+                {{ knp_pagination_sortable(pagination, 'Imagen', 'post.image') }}
+            </th>
+            <th{% if pagination.isSorted('post.date') %} class="sorted"{% endif %}>
+                {{ knp_pagination_sortable(pagination, 'Fecha', 'post.date') }}
+            </th>
+        </tr>
+
+        {# table body #}
+        {% for article in pagination %}
+            <tr {% if loop.index is odd %}class="color"{% endif %}>
+                <td>{{ article.id }}</td>
+                <td>{{ article.title }}</td>
+                <td>{{ article.text }}</td>
+                <td>{{ article.image }}</td>
+                <td>{{ article.date | date('Y-m-d') }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    {# display navigation #}
+    <div class="navigation">
+        {{ knp_pagination_render(pagination) }}
+    </div>
 {% endblock %}
