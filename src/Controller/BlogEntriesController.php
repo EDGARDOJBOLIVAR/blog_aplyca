@@ -16,7 +16,7 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 class BlogEntriesController extends AbstractController
 {
     /**
-     * @Route("/nueva-entrada", name="blog_entries")
+     * @Route("/nueva-entrada", name="new_entries")
      */
     public function index(Request $request, SluggerInterface $slugger): Response
     {
@@ -63,7 +63,7 @@ class BlogEntriesController extends AbstractController
     }
 
     /**
-     * @Route("/ver-entrada/{entrada_id}", name="view_entries")
+     * @Route("/ver-entrada/{entrada_id}", name="view_entrie")
      */
     public function verEntrada($entrada_id): Response
     {

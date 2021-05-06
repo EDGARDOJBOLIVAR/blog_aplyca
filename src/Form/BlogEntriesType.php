@@ -17,8 +17,8 @@ class BlogEntriesType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title', TextType::class , ['label' => 'Titulo'])
-            ->add('text', TextareaType::class, ['label' => 'Contenido'])
+            ->add('title', TextType::class , ['label' => 'Titulo', 'attr' => ['class' => 'form-control']])
+            ->add('text', TextareaType::class, ['label' => 'Contenido', 'attr' => ['class' => 'form-control']])
             ->add('image', FileType::class, [
                 'label' => 'Seleccione imagen', 
                 'mapped' => false, 
@@ -34,8 +34,9 @@ class BlogEntriesType extends AbstractType
                         'mimeTypesMessage' => 'Solo se permiten imagenes (jpeg, jpg, png)',
                     ])
                 ],
+                'attr' => ['class' => 'form-control']
             ])
-            ->add('Registrar', SubmitType::class)
+            ->add('Registrar', SubmitType::class, ['attr' => ['class' => 'btn btn-success mt-2']])
         ;
     }
 
