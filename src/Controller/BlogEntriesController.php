@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\BlogEntries;
 use App\Form\BlogEntriesType;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -76,6 +77,26 @@ class BlogEntriesController extends AbstractController
 
         return $this->render('blog_entries/ver_entrada.html.twig', [
             'entrada' => $Entrada
+        ]);
+    }
+
+    /**
+     * @Route("/blog", name="blog")
+     */
+    public function verBlog(PaginatorInterface $paginator, Request $request): Response
+    {
+        $link = $this->getDoctrine()->getManager();
+        
+        $Posts = $link->getRepository(BlogEntries::class)->buscarEntradasBlog();
+        $pagination = $paginator->paginate(
+            $Posts, /* query NOT result */
+            $request->query->getInt('page', 1), /*page number*/
+            2 /*limit per page*/
+        );
+
+        return $this->render('blog_entries/blog.html.twig', [
+            'posts' => $Posts,
+            'pagination' => $pagination
         ]);
     }
 }
