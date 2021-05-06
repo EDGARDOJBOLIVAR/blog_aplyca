@@ -35,11 +35,11 @@ class BlogEntriesController extends AbstractController
                 // Move the file to the directory where brochures are stored
                 try {
                     $brochureFile->move(
-                        $this->getParameter('brochures_directory'),
+                        $this->getParameter('images_blogs_entrities_directory'),
                         $newFilename
                     );
                 } catch (FileException $e) {
-                    // ... handle exception if something happens during file upload
+                    throw new \Exception("Error en la subida", 1);
                 }
 
                 // updates the 'brochureFilename' property to store the PDF file name
