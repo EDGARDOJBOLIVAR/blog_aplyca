@@ -13,6 +13,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class User implements UserInterface
 {
+    const REGISTRO_EXITOSO = 'Usuario registrado exitosamente.';
     /**
      * @ORM\Id
      * @ORM\GeneratedValue

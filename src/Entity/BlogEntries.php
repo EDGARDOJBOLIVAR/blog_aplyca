@@ -48,6 +48,12 @@ class BlogEntries
      */
     private $user;
 
+    public function __construct()
+    {
+        $this->date = new \DateTime('now');
+        $this->time = new \DateTime('now');
+    }
+
     public function getId(): ?int
     {
         return $this->id;
