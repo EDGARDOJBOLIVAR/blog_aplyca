@@ -54,7 +54,7 @@ class BlogEntriesController extends AbstractController
             $link->persist($Entrada);
             $link->flush();
             // $this->addFlash('correcto', BlogEntriesType::REGISTRO_EXITOSO);
-            return $this->redirectToRoute('blogs');
+            return $this->redirectToRoute('blog');
         }
 
         return $this->render('blog_entries/index.html.twig', [
