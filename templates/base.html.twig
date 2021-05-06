@@ -8,12 +8,14 @@
 
         
         {% block stylesheets %}
-            {#{{ encore_entry_link_tags('app') }}#}
-            <link 
+            <!-- Bootstrap CSS -->
+            <link rel="stylesheet" href="{{ asset('vistas/css/bootstrap.min.css') }}">
         {% endblock %}
 
         {% block javascripts %}
-            {#{{ encore_entry_script_tags('app') }}#}
+            <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
+            <script src="{{ asset('vistas/js/jquery-3.5.1.slim.min.js') }}"></script>
+            <script src="{{ asset('vistas/js/bootstrap.bundle.min.js') }}"></script>
         {% endblock %}
     </head>
     <body>
