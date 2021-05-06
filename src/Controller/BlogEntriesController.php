@@ -20,6 +20,10 @@ class BlogEntriesController extends AbstractController
      */
     public function index(Request $request, SluggerInterface $slugger): Response
     {
+        if (!$this->getUser()) {
+            return $this->redirectToRoute('home');
+        }
+
         $Entrada = new BlogEntries();
         $form = $this->createForm(BlogEntriesType::class, $Entrada);
         $form->handleRequest($request);
