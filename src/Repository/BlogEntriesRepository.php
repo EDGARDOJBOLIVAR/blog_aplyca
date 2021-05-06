@@ -22,8 +22,9 @@ class BlogEntriesRepository extends ServiceEntityRepository
     public function buscarEntradasBlog($result=false)
     {
         $Query = $this->getEntityManager()->createQuery(
-            'SELECT post.id, post.title, post.text, post.image, post.date
-            FROM App:BlogEntries post'
+            'SELECT post.id, post.title, post.text, post.image, post.date, user.name user_name, user.id user_id
+            FROM App:BlogEntries post
+            JOIN post.user user '
         );
         return $result ? $Query->getResult() : $Query;
     }

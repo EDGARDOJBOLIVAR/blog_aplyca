@@ -19,7 +19,7 @@ class UserType extends AbstractType
             ->add('email', EmailType::class, ['label' => 'Correo', 'attr' => ['class' => 'form-control']])
             ->add('password', PasswordType::class, ['label' => 'Contraseña', 'attr' => ['class' => 'form-control']])
             ->add('name', TextType::class, ['label' => 'Nombre', 'attr' => ['class' => 'form-control']])
-            ->add('Registrar', SubmitType::class)
+            ->add('Registrar', SubmitType::class, ['attr' => ['class' => 'btn btn-success mt-2']])
         ;
     }
 
