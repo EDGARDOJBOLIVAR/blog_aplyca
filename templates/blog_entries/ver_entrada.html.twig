@@ -4,12 +4,19 @@
 
 {% block body %}
 
-    {# {{ dump(entrada) }} #}
-    <h3 class="text-center">{{entrada.title | upper()}}</h3>
-    
-    <img src="{{ asset('uploads/images_blogs_entrities/' ~ (entrada.image != '' ? entrada.image : 'empty.png') ) }}" class="img-thumbnail mx-auto d-block mb-4" style="max-width:60%" />
-    <strong>Autor: </strong>/<span>{{entrada.user.name}}</span><br />
-    <strong>Fecha: </strong>/<span>{{entrada.date | date('y-m-d')}}</span><br />
-    <p>{{entrada.text}}</p>
-    
+    <div class="container">
+        <h3 class="text-center">
+            {{entrada.title | upper() }}
+
+            {% if app.user %}
+                <a class="btn btn-outline-primary ml-4" href="{{ path('edit_entry', {entrada_id:entrada.id}) }}">Editar</a>
+            {% endif %}
+        </h3>
+        
+        <img src="{{ asset('uploads/images_blogs_entrities/' ~ (entrada.image != '' ? entrada.image : 'empty.png') ) }}" class="img-thumbnail mx-auto d-block mb-4" style="max-width:60%" />
+        <strong>Autor: </strong><span>{{entrada.user.name}}</span><br />
+        <strong>Fecha: </strong><span>{{entrada.date | date('Y-m-d')}}</span><br />
+        <p>{{entrada.text}}</p>
+    </div>
+
 {% endblock %}
