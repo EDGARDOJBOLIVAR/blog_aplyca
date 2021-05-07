@@ -19,7 +19,7 @@ class BlogEntriesController extends AbstractController
     /**
      * @Route("/nueva-entrada", name="new_entries")
      */
-    public function index(Request $request, SluggerInterface $slugger): Response
+    public function agregarEntrada(Request $request, SluggerInterface $slugger): Response
     {
         $Entrada = new BlogEntries();
         $form = $this->createForm(BlogEntriesType::class, $Entrada);
@@ -35,10 +35,10 @@ class BlogEntriesController extends AbstractController
             $link->persist($Entrada);
             $link->flush();
             // $this->addFlash('correcto', BlogEntriesType::REGISTRO_EXITOSO);
-            return $this->redirectToRoute('blog');
+            return $this->redirectToRoute('blog',['list' => 'mis-entradas']);
         }
 
-        return $this->render('blog_entries/index.html.twig', [
+        return $this->render('blog_entries/agregar_entrada.html.twig', [
             'formulario' => $form->createView()
         ]);
     }
@@ -98,15 +98,15 @@ class BlogEntriesController extends AbstractController
     {
         $link = $this->getDoctrine()->getManager();
         
-        $Posts = $link->getRepository(BlogEntries::class)->buscarEntradasBlog($list == 'mis-entradas' ? $this->getUser()->getId() : false);
+        $Entradas = $link->getRepository(BlogEntries::class)->buscarEntradasBlog($list == 'mis-entradas' ? $this->getUser()->getId() : false);
         $pagination = $paginator->paginate(
-            $Posts, /* query NOT result */
+            $Entradas, /* query NOT result */
             $request->query->getInt('page', 1), /*page number*/
             10 /*limit per page*/
         );
 
         return $this->render('blog_entries/blog.html.twig', [
-            'posts' => $Posts,
+            'posts' => $Entradas,
             'pagination' => $pagination
         ]);
     }

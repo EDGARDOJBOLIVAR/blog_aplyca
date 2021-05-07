@@ -19,17 +19,26 @@
             <div>
                 
             </div>
-            <ul>
-                {% for article in pagination %}
-                    <li>
-                        <a href="#!" class="view-entry-preview" entry_id="{{ article.id }}" entry_title="{{ article.title }}" entry_text="{{ article.text }}" entry_image="{{ article.image }}" entry_date="{{ article.date | date('Y-m-d') }}" entry_autor="{{ article.user_name }}" onClick="view_entry_preview(this); return false;" >{{ article.title }}</a>
-                    </li>
-                {% endfor %}
-            </ul>
-            {# display navigation #}
-            <div class="navigation">
-                {{ knp_pagination_render(pagination) }}
-            </div>
+
+            {% if pagination.getTotalItemCount > 0 %}
+                <ul>
+                    {% for article in pagination %}
+                        <li>
+                            <a href="#!" class="view-entry-preview" entry_id="{{ article.id }}" entry_title="{{ article.title }}" entry_text="{{ article.text }}" entry_image="{{ article.image }}" entry_date="{{ article.date | date('Y-m-d') }}" entry_autor="{{ article.user_name }}" onClick="view_entry_preview(this); return false;" >{{ article.title }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+
+                {# display navigation #}
+                <div class="navigation">
+                    {{ knp_pagination_render(pagination) }}
+                </div>
+
+            {% else %}
+                <div class="alert alert-warning">No se encontraron entradas</div>
+            {% endif %}
+           
+            
         </div>
 
         <div class="col-12 col-md-9" id="space-entry-preview">
