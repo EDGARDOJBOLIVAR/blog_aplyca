@@ -1,5 +1,5 @@
 const RUTA_IMAGENES = '/uploads/images_blogs_entrities/';
-const TEMPLATE_ENTRY_PREVIEW = '<h3 class="text-center">{TITULO}</h3><img src="'+RUTA_IMAGENES+'{IMAGEN}" class="img-thumbnail mx-auto d-block" style="max-width:60%" /><strong>{AUTOR}</strong>/<span>{FECHA}</span><p>{TEXTO}</p><a class="text-danger" href="/ver-entrada/{ID}" title="Ver entrada completa">Ver todo</a>';
+const TEMPLATE_ENTRY_PREVIEW = '<h3 class="text-center">{TITULO}</h3><img src="'+RUTA_IMAGENES+'{IMAGEN}" class="img-thumbnail mx-auto d-block" style="max-width:60%" /><strong>{AUTOR}</strong>/<span>{FECHA}</span><p>{TEXTO}</p><a class="text-info" href="/ver-entrada/{ID}" title="Ver entrada completa">Ver todo</a>';
 
 setTimeout(function(){ 
     console.log(document.getElementsByClassName("view-entry-preview")[0]);
