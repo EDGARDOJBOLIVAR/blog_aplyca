@@ -2,22 +2,25 @@
 
 {% block title %}{{ parent()}} - Blog{% endblock %}
 
-{% block body %}
-    {# {{ dump(pagination) }} #}
+{% block body %}        
     {% if list == 'mis-entradas' %}
-        
+        {% set titulo = 'Mis Entradas' %}
+        {% set subtitulo = {text:'Ver todas', enlace:'todo'} %}
     {% else %}
+        {% set titulo = 'Entradas' %}
+        {% set subtitulo = {text:'Ver mias', enlace:'mis-entradas'} %}
     {% endif %}
 
     <div class="row">
         <div class="col-12 col-md-3">
-            <h3 class="text-center">
-                Entradas 
-
+            <h3 class="text-center">{{titulo}}
                 {% if app.user %}
                     <a class="text-danger" href="{{ path('new_entries') }}" title="agregar entrada">+</a>
                 {% endif %}
             </h3>
+            <h6 class="text-center">
+                <a class="text-info" href="{{ path('blog', {list:subtitulo.enlace}) }}" title="filtrar entradas">{{subtitulo.text}}</a>
+            </h6>
             {# total items count #}
             <div class="count">
                 Total: {{ pagination.getTotalItemCount }}
