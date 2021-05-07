@@ -26,27 +26,7 @@ class BlogEntriesController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $brochureFile = $form->get('image')->getData();
-            if ($brochureFile) {
-                $originalFilename = pathinfo($brochureFile->getClientOriginalName(), PATHINFO_FILENAME);
-                // this is needed to safely include the file name as part of the URL
-                $safeFilename = $slugger->slug($originalFilename);
-                $newFilename = $safeFilename.'-'.uniqid().'.'.$brochureFile->guessExtension();
-
-                // Move the file to the directory where brochures are stored
-                try {
-                    $brochureFile->move(
-                        $this->getParameter('images_blogs_entrities_directory'),
-                        $newFilename
-                    );
-                } catch (FileException $e) {
-                    throw new \Exception("Error en la subida", 1);
-                }
-
-                // updates the 'brochureFilename' property to store the PDF file name
-                // instead of its contents
-                $Entrada->setImage($newFilename);
-            }
+            $this->subirImagen($form, $Entrada, $slugger);
 
             $link = $this->getDoctrine()->getManager();
 
@@ -64,12 +44,47 @@ class BlogEntriesController extends AbstractController
     }
 
     /**
-     * @Route("/ver-entrada/{entrada_id}", name="view_entrie")
+     * @Route("/editar-entrada/{entrada_id}", name="edit_entry")
+     */
+    public function editarEntrada($entrada_id, Request $request, SluggerInterface $slugger): Response
+    {
+        $link = $this->getDoctrine()->getManager();
+        $Entrada = $link->getRepository(BlogEntries::class)->find($entrada_id);
+
+        if (!$Entrada) {
+            throw $this->createNotFoundException("Entrada no encontrada");
+        }
+
+        $form = $this->createForm(BlogEntriesType::class, $Entrada);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->subirImagen($form, $Entrada, $slugger);
+
+            $link->flush();
+
+            return $this->redirectToRoute('view_entry',[
+                'entrada_id' => $Entrada->getId()
+            ]);
+        }
+
+        return $this->render('blog_entries/editar_entrada.html.twig', [
+            'formulario' => $form->createView()
+            , 'entrada' => $Entrada
+        ]);
+    }
+
+    /**
+     * @Route("/ver-entrada/{entrada_id}", name="view_entry")
      */
     public function verEntrada($entrada_id): Response
     {
         $link = $this->getDoctrine()->getManager();
         $Entrada = $link->getRepository(BlogEntries::class)->find($entrada_id);
+
+        if (!$Entrada) {
+            throw $this->createNotFoundException("Entrada no encontrada");
+        }
 
         return $this->render('blog_entries/ver_entrada.html.twig', [
             'entrada' => $Entrada
@@ -94,5 +109,30 @@ class BlogEntriesController extends AbstractController
             'posts' => $Posts,
             'pagination' => $pagination
         ]);
+    }
+    
+    private function subirImagen($form, BlogEntries &$Entrada, SluggerInterface $slugger)
+    {
+        $brochureFile = $form->get('image')->getData();
+        if ($brochureFile) {
+            $originalFilename = pathinfo($brochureFile->getClientOriginalName(), PATHINFO_FILENAME);
+            // this is needed to safely include the file name as part of the URL
+            $safeFilename = $slugger->slug($originalFilename);
+            $newFilename = $safeFilename.'-'.uniqid().'.'.$brochureFile->guessExtension();
+
+            // Move the file to the directory where brochures are stored
+            try {
+                $brochureFile->move(
+                    $this->getParameter('images_blogs_entrities_directory'),
+                    $newFilename
+                );
+            } catch (FileException $e) {
+                throw new \Exception("Error en la subida", 1);
+            }
+
+            // updates the 'brochureFilename' property to store the PDF file name
+            // instead of its contents
+            $Entrada->setImage($newFilename);
+        }
     }
 }

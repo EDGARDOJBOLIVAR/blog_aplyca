@@ -18,7 +18,10 @@ class BlogEntriesType extends AbstractType
     {
         $builder
             ->add('title', TextType::class , ['label' => 'Titulo', 'attr' => ['class' => 'form-control']])
-            ->add('text', TextareaType::class, ['label' => 'Contenido', 'attr' => ['class' => 'form-control']])
+            ->add('text', TextareaType::class, [
+                'label' => 'Contenido', 
+                'attr' => ['class' => 'form-control', 'rows' => 10]
+            ])
             ->add('image', FileType::class, [
                 'label' => 'Seleccione imagen', 
                 'mapped' => false, 
