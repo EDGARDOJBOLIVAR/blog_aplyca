@@ -21,10 +21,6 @@ class BlogEntriesController extends AbstractController
      */
     public function index(Request $request, SluggerInterface $slugger): Response
     {
-        if (!$this->getUser()) {
-            return $this->redirectToRoute('home');
-        }
-
         $Entrada = new BlogEntries();
         $form = $this->createForm(BlogEntriesType::class, $Entrada);
         $form->handleRequest($request);
@@ -91,7 +87,7 @@ class BlogEntriesController extends AbstractController
         $pagination = $paginator->paginate(
             $Posts, /* query NOT result */
             $request->query->getInt('page', 1), /*page number*/
-            2 /*limit per page*/
+            10 /*limit per page*/
         );
 
         return $this->render('blog_entries/blog.html.twig', [

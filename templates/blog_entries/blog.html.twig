@@ -3,49 +3,41 @@
 {% block title %}{{ parent()}} - Blog{% endblock %}
 
 {% block body %}
-    {{ dump(pagination) }}
+    {# {{ dump(pagination) }} #}
 
-    {# total items count #}
-    <div class="count">
-        {{ pagination.getTotalItemCount }}
-    </div>
-    <table class="table table-sm">
-        <thead>
-            <tr>
-                {# sorting of properties based on query components #}
-                <th>{{ knp_pagination_sortable(pagination, 'Id', 'post.id') }}</th>
-                <th{% if pagination.isSorted('post.Title') %} class="sorted"{% endif %}>
-                    {{ knp_pagination_sortable(pagination, 'Titulo', 'post.title') }}
-                </th>
-                <th{% if pagination.isSorted('post.Text') %} class="sorted"{% endif %}>
-                    {{ knp_pagination_sortable(pagination, 'Contenido', 'post.text') }}
-                </th>
-                <th{% if pagination.isSorted('post.Image') %} class="sorted"{% endif %}>
-                    {{ knp_pagination_sortable(pagination, 'Imagen', 'post.image') }}
-                </th>
-                <th{% if pagination.isSorted('post.date') %} class="sorted"{% endif %}>
-                    {{ knp_pagination_sortable(pagination, 'Fecha', 'post.date') }}
-                </th>
-            </tr>
-        </thead>
+    <div class="row">
+        <div class="col-12 col-md-3">
+            <h3 class="text-center">Entradas 
+                {% if app.user %}
+                    <a class="text-danger" href="{{ path('new_entries') }}" title="agregar entrada">+</a>
+                {% endif %}
+            </h3>
+            {# total items count #}
+            <div class="count">
+                Total: {{ pagination.getTotalItemCount }}
+            </div>
+            <div>
+                
+            </div>
+            <ul>
+                {% for article in pagination %}
+                    <li>
+                        <a href="#!" class="view-entry-preview" entry_id="{{ article.id }}" entry_title="{{ article.title }}" entry_text="{{ article.text }}" entry_image="{{ article.image }}" entry_date="{{ article.date | date('Y-m-d') }}" entry_autor="{{ article.user_name }}" onClick="view_entry_preview(this); return false;" >{{ article.title }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+            {# display navigation #}
+            <div class="navigation">
+                {{ knp_pagination_render(pagination) }}
+            </div>
+        </div>
 
-        {# table body #}
-        <tbody>
-            {% for article in pagination %}
-                <tr {% if loop.index is odd %}class="color"{% endif %}>
-                    <td>{{ article.id }}</td>
-                    <td>{{ article.title }}</td>
-                    <td>{{ article.text }}</td>
-                    <td>{{ article.image }}</td>
-                    <td>{{ article.date | date('Y-m-d') }}</td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    {# display navigation #}
-    <div class="navigation">
-        {{ knp_pagination_render(pagination) }}
+        <div class="col-12 col-md-9" id="space-entry-preview">
+            
+        </div>
     </div>
+
+    
 {% endblock %}
 
 
