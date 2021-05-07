@@ -19,12 +19,21 @@ class BlogEntriesRepository extends ServiceEntityRepository
         parent::__construct($registry, BlogEntries::class);
     }
 
-    public function buscarEntradasBlog($result=false)
+    public function buscarEntradasBlog($user_id=false, $result=false)
     {
+        $consulta = 'SELECT post.id, post.title, post.text, post.image, post.date
+                        , user.name user_name, user.id user_id
+                    FROM App:BlogEntries post
+                    JOIN post.user user ';
+
+        if ($user_id !== false) {
+            // var_dump('<pre>', );
+            // exit;
+            $consulta .= 'WHERE user.id = '.$user_id;
+        }
+
         $Query = $this->getEntityManager()->createQuery(
-            'SELECT post.id, post.title, post.text, post.image, post.date, user.name user_name, user.id user_id
-            FROM App:BlogEntries post
-            JOIN post.user user '
+            $consulta
         );
         return $result ? $Query->getResult() : $Query;
     }

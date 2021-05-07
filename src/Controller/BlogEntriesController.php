@@ -92,13 +92,13 @@ class BlogEntriesController extends AbstractController
     }
 
     /**
-     * @Route("/blog", name="blog")
+     * @Route("/blog/{list}", name="blog")
      */
-    public function verBlog(PaginatorInterface $paginator, Request $request): Response
+    public function verBlog($list='todo', PaginatorInterface $paginator, Request $request): Response
     {
         $link = $this->getDoctrine()->getManager();
         
-        $Posts = $link->getRepository(BlogEntries::class)->buscarEntradasBlog();
+        $Posts = $link->getRepository(BlogEntries::class)->buscarEntradasBlog($list == 'mis-entradas' ? $this->getUser()->getId() : false);
         $pagination = $paginator->paginate(
             $Posts, /* query NOT result */
             $request->query->getInt('page', 1), /*page number*/
