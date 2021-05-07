@@ -3,37 +3,39 @@
 {% block title %}{{ parent()}} - Ingreso{% endblock %}
 
 {% block body %}
-<form method="post">
-    {% if error %}
-        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
 
-    <h1 class="h3 mb-3 font-weight-normal text-center">Ingreso de usuario</h1>
-    <label for="inputEmail">Correo</label>
-    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" required autofocus>
-    <label for="inputPassword">Contraseña</label>
-    <input type="password" name="password" id="inputPassword" class="form-control" required>
+<div class="container">
+    <form method="post">
+        {% if error %}
+            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+        {% endif %}
 
-    <input type="hidden" name="_csrf_token"
-           value="{{ csrf_token('authenticate') }}"
-    >
+        <h1 class="h3 mb-3 font-weight-normal text-center">Ingreso de usuario</h1>
+        <label for="inputEmail">Correo</label>
+        <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" required autofocus>
+        <label for="inputPassword">Contraseña</label>
+        <input type="password" name="password" id="inputPassword" class="form-control" required>
 
-    {#
-        Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
-        See https://symfony.com/doc/current/security/remember_me.html
+        <input type="hidden" name="_csrf_token"
+            value="{{ csrf_token('authenticate') }}"
+        >
 
-        <div class="checkbox mb-3">
-            <label>
-                <input type="checkbox" name="_remember_me"> Remember me
-            </label>
-        </div>
-    #}
+        {#
+            Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
+            See https://symfony.com/doc/current/security/remember_me.html
 
-    <button class="btn btn-lg btn-primary mt-2" type="submit">
-        Entrar
-    </button>
-</form>
+            <div class="checkbox mb-3">
+                <label>
+                    <input type="checkbox" name="_remember_me"> Remember me
+                </label>
+            </div>
+        #}
 
-<a href="{{ path('registro') }}" class="btn btn-lg btn-outline-warning mt-4" type="submit">Registrar</a>
+        <button class="btn btn-lg btn-primary mt-2" type="submit">
+            Entrar
+        </button>
+    </form>
 
+    <a href="{{ path('registro') }}" class="btn btn-lg btn-outline-warning mt-4" type="submit">Registrar</a>
+</div>
 {% endblock %}
