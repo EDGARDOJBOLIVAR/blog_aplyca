@@ -29,8 +29,10 @@ class BlogEntriesRepository extends ServiceEntityRepository
         if ($user_id !== false) {
             // var_dump('<pre>', );
             // exit;
-            $consulta .= 'WHERE user.id = '.$user_id;
+            $consulta .= 'WHERE user.id = '.$user_id.' ';
         }
+
+        $consulta .= 'ORDER BY post.date DESC, post.time DESC ';
 
         $Query = $this->getEntityManager()->createQuery(
             $consulta

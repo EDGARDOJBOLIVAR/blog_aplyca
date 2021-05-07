@@ -107,7 +107,8 @@ class BlogEntriesController extends AbstractController
 
         return $this->render('blog_entries/blog.html.twig', [
             'posts' => $Entradas,
-            'pagination' => $pagination
+            'pagination' => $pagination,
+            'list' => $list
         ]);
     }
     

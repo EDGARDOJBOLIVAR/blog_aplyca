@@ -39,25 +39,20 @@
                             <a class="nav-link" href="{{ path('contact') }}">Contacto</a>
                         </li>
                         
-                        {% if app.user %}
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    {{ app.user.name }}
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    {# <div class="dropdown-divider"></div> #}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                {{ app.user.name ?? 'Invitado' }}
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                {% if app.user %}
                                     <a class="dropdown-item text-danger" href="{{ path('app_logout') }}">Salir</a>
-                                </div>
-                            </li>
-                        {% else %}
-                            <li>
-                                <a class="nav-link text-info" href="{{ path('app_login') }}">Ingreso</a>
-                            </li>
-                            <li>
-                                <a class="nav-link text-warning" href="{{ path('registro') }}">Registro</a>
-                            </li>
-                        {% endif %}
-                        
+                                {% else %}
+                                    <a class="dropdown-item text-info" href="{{ path('app_login') }}">Ingreso</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item text-warning" href="{{ path('registro') }}">Registro</a>
+                                {% endif %}
+                            </div>
+                        </li>
                     </ul>
                 </div>
             </nav>
