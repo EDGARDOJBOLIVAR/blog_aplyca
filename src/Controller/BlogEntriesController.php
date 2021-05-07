@@ -52,7 +52,16 @@ class BlogEntriesController extends AbstractController
         $Entrada = $link->getRepository(BlogEntries::class)->find($entrada_id);
 
         if (!$Entrada) {
-            throw $this->createNotFoundException("Entrada no encontrada");
+            // throw $this->createNotFoundException("Entrada no encontrada");
+            $this->addFlash('error', 'Entrada no encontrada.');
+            return $this->redirectToRoute('blog',[
+                'entrada_id' => $entrada_id
+            ]);
+        }elseif ($Entrada->getUser()->getId() != $this->getUser()->getId()){
+            $this->addFlash('error', 'Usted no puede editar esta entrada.');
+            return $this->redirectToRoute('view_entry',[
+                'entrada_id' => $Entrada->getId()
+            ]);
         }
 
         $form = $this->createForm(BlogEntriesType::class, $Entrada);
@@ -83,7 +92,11 @@ class BlogEntriesController extends AbstractController
         $Entrada = $link->getRepository(BlogEntries::class)->find($entrada_id);
 
         if (!$Entrada) {
-            throw $this->createNotFoundException("Entrada no encontrada");
+            // throw $this->createNotFoundException("Entrada no encontrada");
+            $this->addFlash('error', 'Entrada no encontrada.');
+            return $this->redirectToRoute('blog',[
+                'entrada_id' => $entrada_id
+            ]);
         }
 
         return $this->render('blog_entries/ver_entrada.html.twig', [
