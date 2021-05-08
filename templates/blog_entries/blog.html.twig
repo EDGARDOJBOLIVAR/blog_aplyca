@@ -48,7 +48,9 @@
                                     <a href="{{ path('view_entry', {entrada_id:article.id}) }}" class="text-info" >Ver</a>
                                 </td>
                                 <td>
-                                    <a href="{{ path('edit_entry', {entrada_id:article.id}) }}" class="text-primary" >Editar</a>
+                                    {% if app.user and app.user.id == entrada.user.id %}
+                                        <a href="{{ path('edit_entry', {entrada_id:article.id}) }}" class="text-primary" >Editar</a>
+                                    {% endif %}
                                 </td>
                             </tr>
                         {% endfor %}
