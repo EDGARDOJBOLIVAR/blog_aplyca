@@ -42,14 +42,14 @@
                         {% for article in pagination %}
                             <tr>
                                 <td>
-                                    <a href="#!" class="view-entry-preview" entry_id="{{ article.id }}" entry_title="{{ article.title }}" entry_text="{{ article.text }}" entry_image="{{ article.image }}" entry_date="{{ article.date | date('Y-m-d') }}" entry_autor="{{ article.user_name }}" onClick="view_entry_preview(this); return false;" >{{ article.title }}</a>
+                                    <a href="#!" class="view-entry-preview" entry_id="{{ article.id }}" entry_title="{{ article.title }}" entry_subtitle="{{ article.subtitle }}" entry_text="{{ article.text }}" entry_image="{{ article.image }}" entry_date="{{ article.date | date('Y-m-d') }}" entry_autor="{{ article.user_name }}" onClick="view_entry_preview(this); return false;" >{{ article.title }}</a>
                                 </td>
                                 <td>
                                     <a href="{{ path('view_entry', {entrada_id:article.id}) }}" class="text-info" >Ver</a>
                                 </td>
                                 <td>
                                     {% if app.user and app.user.id == article.user_id %}
-                                        <a href="{{ path('edit_entry', {entrada_id:article.id}) }}" class="text-primary" >Editar</a>
+                                        <a href="{{ path('edit_entry', {entrada_id:article.id}) }}" class="text-warning" >Editar</a>
                                     {% endif %}
                                 </td>
                             </tr>

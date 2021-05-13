@@ -21,7 +21,7 @@ class BlogEntriesRepository extends ServiceEntityRepository
 
     public function buscarEntradasBlog($user_id=false, $result=false)
     {
-        $consulta = 'SELECT post.id, post.title, post.text, post.image, post.date
+        $consulta = 'SELECT post.id, post.title, post.subtitle, post.text, post.image, post.date
                         , user.name user_name, user.id user_id
                     FROM App:BlogEntries post
                     JOIN post.user user ';

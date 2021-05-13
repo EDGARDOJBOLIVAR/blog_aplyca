@@ -49,6 +49,11 @@ class BlogEntries
      */
     private $user;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $subtitle;
+
     public function __construct()
     {
         $this->date = new \DateTime('now');
@@ -128,6 +133,18 @@ class BlogEntries
     public function setUser(?user $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getSubtitle(): ?string
+    {
+        return $this->subtitle;
+    }
+
+    public function setSubtitle(?string $subtitle): self
+    {
+        $this->subtitle = $subtitle;
 
         return $this;
     }
