@@ -12,6 +12,9 @@
                 <a class="btn btn-outline-primary ml-4" href="{{ path('edit_entry', {entrada_id:entrada.id}) }}">Editar</a>
             {% endif %}
         </h3>
+        <h4 class="text-center">
+            {{entrada.subtitle | upper() }}
+        </h4>
         
         <img src="{{ asset('uploads/images_blogs_entrities/' ~ (entrada.image != '' ? entrada.image : 'empty.png') ) }}" class="img-thumbnail mx-auto d-block mb-4" style="max-width:60%" />
         <strong>Autor: </strong><span>{{entrada.user.name}}</span><br />
