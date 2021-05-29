@@ -115,7 +115,7 @@ class BlogEntriesController extends AbstractController
         $pagination = $paginator->paginate(
             $Entradas, /* query NOT result */
             $request->query->getInt('page', 1), /*page number*/
-            10 /*limit per page*/
+            5 /*limit per page*/
         );
 
         return $this->render('blog_entries/blog.html.twig', [
