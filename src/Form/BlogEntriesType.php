@@ -40,6 +40,10 @@ class BlogEntriesType extends AbstractType
                 ],
                 'attr' => ['class' => 'form-control']
             ])
+            ->add('sumary', TextareaType::class, [
+                'label' => 'Resumen', 
+                'attr' => ['class' => 'form-control', 'rows' => 6]
+            ])
             ->add('Registrar', SubmitType::class, ['attr' => ['class' => 'btn btn-success mt-2']])
         ;
     }

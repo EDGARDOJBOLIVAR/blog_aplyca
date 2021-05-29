@@ -54,6 +54,11 @@ class BlogEntries
      */
     private $subtitle;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $sumary;
+
     public function __construct()
     {
         $this->date = new \DateTime('now');
@@ -145,6 +150,18 @@ class BlogEntries
     public function setSubtitle(?string $subtitle): self
     {
         $this->subtitle = $subtitle;
+
+        return $this;
+    }
+
+    public function getSumary(): ?string
+    {
+        return $this->sumary;
+    }
+
+    public function setSumary(?string $sumary): self
+    {
+        $this->sumary = $sumary;
 
         return $this;
     }
